@@ -39,10 +39,10 @@ double Geotiff::GetNoDataValue() {
   GDALDataset *dataset; // Geotiff GDAL datset object. 
   dataset = geotiffDataset;
   float f = dataset->GetRasterCount();
-//  GDALRasterBand *hBand = dataset->GetRasterBand(1);
-//  double dfNoData = (double)geotiffDataset->GetRasterBand(1)->GetNoDataValue();
-//  return dfNoData;
-  //  return (double)geotiffDataset->GetRasterBand(1)->GetNoDataValue();
+ GDALRasterBand *hBand = dataset->GetRasterBand(1);
+ double dfNoData = (double)geotiffDataset->GetRasterBand(1)->GetNoDataValue();
+ return dfNoData;
+   return (double)geotiffDataset->GetRasterBand(1)->GetNoDataValue();
   }
 
 /**
@@ -175,7 +175,7 @@ float** Geotiff::GetArray2D(int layerIndex,float** bandLayer) {
     cout << "[GetArray2D] Allocating rows:" << nRows << endl;    
     for(int row=0; row<nRows; row++) {     // iterate through rows
 
-      cout << "Row:\t" << row << endl;
+      // cout << "Row:\t" << row << endl;
       // read the scanline into the dynamically allocated row-buffer       
       CPLErr e = geotiffDataset->GetRasterBand(layerIndex)->RasterIO(GF_Read,0,row,nCols,1,rowBuff,nCols,1,bandType,0,0);
       if(!(e == 0)) { 
@@ -186,6 +186,7 @@ float** Geotiff::GetArray2D(int layerIndex,float** bandLayer) {
       bandLayer[row] = new float[nCols];
       for( int col=0; col<nCols; col++ ) { // iterate through columns
         bandLayer[row][col] = (float)rowBuff[col];
+//        cout << rowBuff[col] << " ";
       }
     }
     CPLFree( rowBuff );

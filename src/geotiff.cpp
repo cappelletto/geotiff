@@ -87,7 +87,7 @@ float** Geotiff::GetRasterBand(int z) {
       * it to this function. This function returns that 
       * float** pointer. 
       */
-  cout << "[Geotiff] Creating data container" << endl;
+  // cout << "[Geotiff] Creating data container" << endl;
   float** bandLayer = new float*[nRows];
   switch( GDALGetRasterDataType(geotiffDataset->GetRasterBand(z)) ) {
       case 0:
@@ -167,19 +167,19 @@ float** Geotiff::GetArray2D(int layerIndex,float** bandLayer) {
     // get number of bytes per pixel in Geotiff
     int nbytes = GDALGetDataTypeSizeBytes(bandType);
 
-    cout << "[GetArray2D] Allocating rowBuff" << endl;    
+    // cout << "[GetArray2D] Allocating rowBuff" << endl;    
     // allocate pointer to memory block for one row (scanline) 
     // in 2D Geotiff array.  
     T *rowBuff = (T*) CPLMalloc(nbytes*nCols);
 
-    cout << "[GetArray2D] Allocating rows:" << nRows << endl;    
+    // cout << "[GetArray2D] Allocating rows:" << nRows << endl;    
     for(int row=0; row<nRows; row++) {     // iterate through rows
 
       // cout << "Row:\t" << row << endl;
       // read the scanline into the dynamically allocated row-buffer       
       CPLErr e = geotiffDataset->GetRasterBand(layerIndex)->RasterIO(GF_Read,0,row,nCols,1,rowBuff,nCols,1,bandType,0,0);
       if(!(e == 0)) { 
-        cout << "Warning: Unable to read scanline in Geotiff!" << endl;
+        cout << "[geotiff] Error: Unable to read scanline in Geotiff!" << endl;
         exit(1);
       }
         

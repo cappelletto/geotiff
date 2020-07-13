@@ -7,10 +7,15 @@
 #include <cpl_conv.h>
 #include <gdalwarper.h>
 #include <stdlib.h>
+#include <ogr_spatialref.h>
 
 using namespace std;
 typedef std::string String; 
  
+namespace gtf{
+  
+}
+
 class Geotiff { 
  
   private: // NOTE: "private" keyword is redundant here.  
@@ -55,6 +60,8 @@ class Geotiff {
       // retrieve, if available, no-data definition for the first band
       // TODO: vector of no-data definitions. We could have 1 per band. How common is that?
       dfNoData = GDALGetRasterNoDataValue (GDALGetRasterBand( geotiffDataset, 1 ), &bGotNodata);
+      // WIP: Retrieve Spatial Ref an populate local container;
+      datasetSpatialRef = new OGRSpatialReference(geotiffDataset->GetProjectionRef());
     }
  
     // define destructor function to close dataset, 
@@ -62,10 +69,13 @@ class Geotiff {
     // from memory. 
     ~Geotiff() {
       // close the Geotiff dataset, free memory for array.  
+      delete datasetSpatialRef; // free locally stored copy of OGRSpatialReference
       GDALClose(geotiffDataset);
-      GDALDestroyDriverManager();
+      GDALDestroyDriverManager(); // Kill'em all!
     }
  
+    OGRSpatialReference *datasetSpatialRef; //Dataset-wide OGR Spatial Ref (WKT format)
+
     GDALDataset *GetDataset();
     /*
      * function GDALDataset *GetDataset()
@@ -175,8 +185,6 @@ class Geotiff {
 // TODO: DOCUMENTATION
     // template<typename T>
     float* GetArray1D(int layerIndex,float* bandLayer);
-
-
 
 };
 

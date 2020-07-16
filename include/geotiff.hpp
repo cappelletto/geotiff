@@ -11,10 +11,6 @@
 
 using namespace std;
 typedef std::string String; 
- 
-namespace gtf{
-  
-}
 
 class Geotiff { 
  

@@ -87,7 +87,7 @@ float** Geotiff::GetRasterBand(int z) {
       * it to this function. This function returns that 
       * float** pointer. 
       */
-  cout << "[Geotiff] Creating data container" << endl;
+  // cout << "[Geotiff] Creating data container" << endl;
   float** bandLayer = new float*[nRows];
   switch( GDALGetRasterDataType(geotiffDataset->GetRasterBand(z)) ) {
       case 0:
@@ -202,14 +202,14 @@ void Geotiff::ShowInformation(){
   * This function prints out a summary of current dataset variables
   */
 	double adfGeoTransform[6];
-	cout << "Driver: " << geotiffDataset->GetDriver()->GetDescription() << "/" << geotiffDataset->GetDriver()->GetMetadataItem( GDAL_DMD_LONGNAME ) << endl;
-	cout << "Size is X: " << geotiffDataset->GetRasterXSize() << " Y: " << geotiffDataset->GetRasterYSize() << " C: " << geotiffDataset->GetRasterCount() << endl; 
+	cout << "Driver:\t\t" << geotiffDataset->GetDriver()->GetDescription() << "/" << geotiffDataset->GetDriver()->GetMetadataItem( GDAL_DMD_LONGNAME ) << endl;
+	cout << "Size is\tX: " << geotiffDataset->GetRasterXSize() << "\tY: " << geotiffDataset->GetRasterYSize() << "\tC: " << geotiffDataset->GetRasterCount() << endl; 
 	if( geotiffDataset->GetProjectionRef()  != NULL )
 	    cout << "Projection is " << geotiffDataset->GetProjectionRef() << endl;
 	if( geotiffDataset->GetGeoTransform( adfGeoTransform ) == CE_None )
 	{
-	    cout << "Origin = " <<  adfGeoTransform[0] << ", " << adfGeoTransform[3] << endl;
-	    cout << "Pixel Size = " << adfGeoTransform[1] << ", " << adfGeoTransform[5] << endl;
+	    cout << "Origin =\t" <<  adfGeoTransform[0] << ", " << adfGeoTransform[3] << endl;
+	    cout << "Pixel Size =\t" << adfGeoTransform[1] << ", " << adfGeoTransform[5] << endl;
 	}
 
   // for each available band, we print its information
@@ -229,14 +229,13 @@ void Geotiff::ShowInformation(){
     adfMinMax[1] = poBand->GetMaximum( &bGotMax );
     if( ! (bGotMin && bGotMax) )
       GDALComputeRasterMinMax((GDALRasterBandH)poBand, TRUE, adfMinMax);
-    printf( "Min=%.3f, Max=%.3f\n", adfMinMax[0], adfMinMax[1] );
+    cout << "Min = " << adfMinMax[0] <<",\tMax = " << adfMinMax[1] << endl;
     if( poBand->GetOverviewCount() > 0 )
-      printf( "Band has %d overviews.\n", poBand->GetOverviewCount() );
+      cout << "Band has " << poBand->GetOverviewCount() << "overviews" << endl;
     if( poBand->GetColorTable() != NULL )
-      printf( "Band has a color table with %d entries.\n",
-          poBand->GetColorTable()->GetColorEntryCount() );
+      cout << "Band has a color table with " << poBand->GetColorTable()->GetColorEntryCount() << " entries" << endl;
 
-    cout << "Units: " << poBand->GetUnitType() << endl;
+    cout << "Units:\t\t" << poBand->GetUnitType() << endl;
 
     // WARNING: TODO: this conditional is valid only for the first band which is retrieved in the construction at creation time
     if (!bGotNodata){

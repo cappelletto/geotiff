@@ -179,7 +179,7 @@ float** Geotiff::GetArray2D(int layerIndex,float** bandLayer) {
       // read the scanline into the dynamically allocated row-buffer       
       CPLErr e = geotiffDataset->GetRasterBand(layerIndex)->RasterIO(GF_Read,0,row,nCols,1,rowBuff,nCols,1,bandType,0,0);
       if(!(e == 0)) { 
-        cout << "Warning: Unable to read scanline in Geotiff!" << endl;
+        cout << "[geotiff] Error: Unable to read scanline in Geotiff!" << endl;
         exit(1);
       }
         

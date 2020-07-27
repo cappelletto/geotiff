@@ -254,6 +254,21 @@ void Geotiff::ShowInformation(){
 	// NAMES AND ORDERING OF THE AXES
 }
 
+/**
+ * @brief Returns the parameter retrieved from the 6D geotransform matrix corresponding to the raster band 1
+ * 
+ * @param paramID constant index identiying the parameter to be retrieved
+ * @return double value of the parameter
+ */
+double Geotiff::GetGeoTransformParam(int paramID){
+  if (paramID < 0 || paramID > 6){
+    //TODO: we should throw an exception
+    cout << "[geotiff] Geotiff::GetGeoTransformParam invalid paramID: [" << paramID << "]. It must be 0 <= paramId <=5" << endl;
+    cout << "ocurred @ " << __FILE__ << ":" << __LINE__ << endl; 
+    return 0;
+  }
+  return geotransform[paramID];
+}
 
 // template<typename T>
 float* Geotiff::GetArray1D(int layerIndex,float* bandLayer) {

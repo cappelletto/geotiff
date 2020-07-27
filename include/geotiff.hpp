@@ -12,6 +12,11 @@
 using namespace std;
 typedef std::string String; 
 
+#define GEOTIFF_PARAM_CX 0
+#define GEOTIFF_PARAM_CY 3
+#define GEOTIFF_PARAM_SX 1
+#define GEOTIFF_PARAM_SY 5
+
 class Geotiff { 
  
   private: // NOTE: "private" keyword is redundant here.  
@@ -54,8 +59,9 @@ class Geotiff {
       nCols   = GDALGetRasterXSize( geotiffDataset ); 
       nBands = GDALGetRasterCount( geotiffDataset );
       // retrieve, if available, no-data definition for the first band
-      // TODO: vector of no-data definitions. We could have 1 per band. How common is that?
+      // BLUEPRINT: vector of no-data definitions. We could have 1 per band. How common is that?
       dfNoData = GDALGetRasterNoDataValue (GDALGetRasterBand( geotiffDataset, 1 ), &bGotNodata);
+      geotiffDataset->GetGeoTransform(geotransform);
       // WIP: Retrieve Spatial Ref an populate local container;
       datasetSpatialRef = new OGRSpatialReference(geotiffDataset->GetProjectionRef());
     }
@@ -69,7 +75,9 @@ class Geotiff {
       GDALClose(geotiffDataset);
       GDALDestroyDriverManager(); // Kill'em all!
     }
- 
+
+    double GetGeoTransformParam(int paramID); //returns value of single geoTransform parameter for RasterBand(1)
+
     OGRSpatialReference *datasetSpatialRef; //Dataset-wide OGR Spatial Ref (WKT format)
 
     GDALDataset *GetDataset();
@@ -178,7 +186,6 @@ class Geotiff {
        // get the raster data type (ENUM integer 1-12, 
        // see GDAL C/C++ documentation for more details)         
 
-// TODO: DOCUMENTATION
     // template<typename T>
     float* GetArray1D(int layerIndex,float* bandLayer);
 

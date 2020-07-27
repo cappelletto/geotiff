@@ -58,6 +58,13 @@ class Geotiff {
       nRows   = GDALGetRasterYSize( geotiffDataset ); 
       nCols   = GDALGetRasterXSize( geotiffDataset ); 
       nBands = GDALGetRasterCount( geotiffDataset );
+      if (nBands < 1){
+        cout << "[Geotiff::Geotiff] Retrieved invalid number of bands from geotiffDataset (" << __FILE__ << "@" << __LINE__ << endl;
+      }
+      if (nBands > 1){
+        cout << "[Geotiff::Geotiff] More than 1 band found in the geotiff file. We will use only the first one" << endl;
+        cout << "[Geotiff::Geotiff] multiband import not supported yet" << endl;
+      }
       // retrieve, if available, no-data definition for the first band
       // BLUEPRINT: vector of no-data definitions. We could have 1 per band. How common is that?
       dfNoData = GDALGetRasterNoDataValue (GDALGetRasterBand( geotiffDataset, 1 ), &bGotNodata);

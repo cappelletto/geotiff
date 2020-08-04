@@ -80,7 +80,6 @@ class Geotiff {
       // close the Geotiff dataset, free memory for array.  
       delete datasetSpatialRef; // free locally stored copy of OGRSpatialReference
       GDALClose(geotiffDataset);
-      GDALDestroyDriverManager(); // Kill'em all!
     }
 
     double GetGeoTransformParam(int paramID); //returns value of single geoTransform parameter for RasterBand(1)
@@ -136,6 +135,8 @@ class Geotiff {
        *  Returns the NoData as a double. 
        */
  
+    void GetDimensions(int *);
+
     int *GetDimensions();
       /* 
        * int *GetDimensions(): 

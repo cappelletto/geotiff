@@ -124,6 +124,12 @@ GDALDataset *Geotiff::GetDataset(){
   // this breaks the abstraction layer, but we do not want to isolate the whole API
 }
 
+void Geotiff::GetDimensions(int *dim){
+  dim[0] = nCols;
+  dim[1] = nRows;
+  dim[2] = nBands;
+}
+
 int *Geotiff::GetDimensions() {
   /* 
     * int *GetDimensions(): 
@@ -135,8 +141,8 @@ int *Geotiff::GetDimensions() {
     *   (2) number of rows (y size)
     *   (3) number of bands (number of bands, z dimension)
     */
-  dimensions[0] = nRows; 
-  dimensions[1] = nCols;
+  dimensions[0] = nCols; 
+  dimensions[1] = nRows;
   dimensions[2] = nBands; 
   return dimensions;  
 } 

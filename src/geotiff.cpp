@@ -38,11 +38,10 @@ double Geotiff::GetNoDataValue() {
       */
   GDALDataset *dataset; // Geotiff GDAL datset object. 
   dataset = geotiffDataset;
-  float f = dataset->GetRasterCount();
-//  GDALRasterBand *hBand = dataset->GetRasterBand(1);
-//  double dfNoData = (double)geotiffDataset->GetRasterBand(1)->GetNoDataValue();
-//  return dfNoData;
-  //  return (double)geotiffDataset->GetRasterBand(1)->GetNoDataValue();
+  // int f = dataset->GetRasterCount(); // \todo: cheack that we have at least one band
+  GDALRasterBand *hBand = dataset->GetRasterBand(1);
+  double dfNoData = (double)geotiffDataset->GetRasterBand(1)->GetNoDataValue();
+  return dfNoData;
   }
 
 /**

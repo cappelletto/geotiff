@@ -30,7 +30,7 @@ add_executable (geotiff_test  	src/geotiff_test.cpp
                           		src/geotiff.cpp
                           		${PROJECT_HEADERS})
 
-target_compile_options(geotiff_test PUBLIC -std=c++11)
+target_compile_options(geotiff_test PUBLIC -std=c++11 -pthread)
 target_link_libraries(geotiff_test ${GDAL_LIBRARY})
 
-
+SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread")

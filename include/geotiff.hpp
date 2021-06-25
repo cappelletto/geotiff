@@ -32,7 +32,6 @@ class Geotiff {
     double dfNoData;
     int bValidDataset;
     int bGotNodata;
-	// TODO: deal with GMF_NODATA & Masks
 	// See: https://gdal.org/development/rfc/rfc15_nodatabitmask.html#rfc-15
 
 

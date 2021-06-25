@@ -38,7 +38,7 @@ double Geotiff::GetNoDataValue() {
       */
   GDALDataset *dataset; // Geotiff GDAL datset object. 
   dataset = geotiffDataset;
-  // int f = dataset->GetRasterCount(); // \todo: cheack that we have at least one band
+  // int f = dataset->GetRasterCount(); // TODO: check that we have at least one band
   GDALRasterBand *hBand = dataset->GetRasterBand(1);
   double dfNoData = (double)geotiffDataset->GetRasterBand(1)->GetNoDataValue();
   return dfNoData;
@@ -242,7 +242,7 @@ void Geotiff::ShowInformation(){
 
     cout << "Units:\t\t" << poBand->GetUnitType() << endl;
 
-    // WARNING: TODO: this conditional is valid only for the first band which is retrieved in the construction at creation time
+    // WARNING: this conditional is valid only for the first band which is retrieved in the construction at creation time
     if (!bGotNodata){
       cout << "Current band does not provide explicit no-data field definition" << endl;
     }
